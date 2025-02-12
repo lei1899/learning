@@ -6,7 +6,6 @@ import {useEffect, useState} from 'react';
 import {RichtextContent} from "../../components/common/richtextContent/richtextContent.style";
 import Footer from "../../components/common/footer/footer";
 import getNestedObjectValue from "../../common_check/getValue";
-import imageUrl from "../../constantVariables";
 
 function NewsDetailPage() {
     let {newsId} = useParams();

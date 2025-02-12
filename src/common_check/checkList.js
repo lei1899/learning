@@ -1,8 +1,6 @@
 import getNestedObjectValue from "./getValue";
 
 function validate(data, maxNumber) {
-    const title = getNestedObjectValue(data, 'title')
-    const buttonName = getNestedObjectValue(data, 'buttonName')
     const list = getNestedObjectValue(data, 'list')
     
     if (!data || !list ) {
