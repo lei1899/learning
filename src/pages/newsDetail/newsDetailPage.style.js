@@ -35,3 +35,20 @@ export const TitleSection = styled(QuoteCard)`
 export const StyledImage = styled.img`
     width: 400px;
 `;
+
+export const BlanksContainer = styled.div`
+    padding-left: 100px;
+
+    span {
+        display: inline;
+    }
+
+    input {
+        display: inline;
+    }
+
+    button {
+        display: block;
+        margin: 0 auto;
+    }
+`;
