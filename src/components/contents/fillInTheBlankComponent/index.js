@@ -9,7 +9,7 @@ const FillInTheBlankComponent = ({ blanksArray, handleSubmit, inputValues, setIn
                 setInputValues(Array(totalBlankCount).fill(''));
             }
         }
-    }, [blanksArray, inputValues]);
+    }, [blanksArray, inputValues, setInputValues]);
 
     const handleInputChange = (index) => (e) => {
         const newValues = [...inputValues];
@@ -18,6 +18,8 @@ const FillInTheBlankComponent = ({ blanksArray, handleSubmit, inputValues, setIn
     };
 
     if (!blanksArray || !Array.isArray(blanksArray)) return null;
+
+    const allInputsFilled = inputValues.every(value => value.length > 0);
 
     let currentIndex = 0;
     return (
@@ -30,13 +32,16 @@ const FillInTheBlankComponent = ({ blanksArray, handleSubmit, inputValues, setIn
                     <>
                         {item.fields.blank.split(/(_+)/).map((part, innerIndex) => {
                             if (part.match(/_+/)) {
+                                console.log("==answerLength==", item.fields.answer);
+                                const answerLength = item.fields.answer ? item.fields.answer.length : 10;
                                 const input = (
                                     <input
                                         key={`${outerIndex}-${innerIndex}`}
                                         type="text"
                                         value={inputValues[currentIndex]}
                                         onChange={handleInputChange(currentIndex)}
-                                        placeholder=""
+                                        size={answerLength + 10}
+                                        style={{ fontSize: '16px' }}
                                     />
                                 );
                                 currentIndex++;
@@ -48,7 +53,7 @@ const FillInTheBlankComponent = ({ blanksArray, handleSubmit, inputValues, setIn
                 );
                 
             })}
-            <button onClick={handleSubmit}>submit</button>
+            <button disabled={!allInputsFilled} onClick={handleSubmit}>submit</button>
         </>
     );
 };
