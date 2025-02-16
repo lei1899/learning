@@ -56,7 +56,3 @@ export const BlanksContainer = styled.div`
       padding: 10px;
     }
 `;
-
-export const Highlight = styled.span`
-  background-color: yellow;
-`;

@@ -7,6 +7,7 @@ import { RichtextContent } from "../../components/common/richtextContent/richtex
 import Footer from "../../components/common/footer/footer";
 import getNestedObjectValue from "../../common_check/getValue";
 import FillInTheBlankComponent from "../../components/contents/fillInTheBlankComponent";
+import ComparisonComponent from "../../components/contents/comparisonComponent";
 
 function NewsDetailPage() {
     let { newsId } = useParams();
@@ -83,51 +84,13 @@ function NewsDetailPage() {
                         setInputValues={setInputValues}
                     />
                 )}
-            {/* 第二步：对比答案 */}
-            {showComparison && !showChoices && (
-                <div>
-                    <p>用户输入：
-                    {(() => {
-                            const blanks = getNestedObjectValue(newsDetailData, 'fillInTheBlank');
-                            if (blanks) {
-                                const parts = [];
-                                let blankIndex = 0;
-                                blanks.split(/(_+)/).forEach(part => {
-                                    if (part.match(/_+/)) {
-                                        parts.push(<Highlight key={blankIndex}>{inputValues[blankIndex] || ''}</Highlight>);
-                                        blankIndex++;
-                                    } else {
-                                        parts.push(<span key={parts.length}>{part}</span>);
-                                    }
-                                });
-                                return parts;
-                            }
-                            return userAnswer;
-                        })()}
-                    </p>
-                    <p>原文：
-                    {(() => {
-                            const blanks = getNestedObjectValue(newsDetailData, 'fillInTheBlank');
-                            if (blanks) {
-                                const parts = [];
-                                let blankIndex = 0;
-                                let originalTextParts = originalText.split(new RegExp(blanks.replace(/_+/g, '(.*?)')));
-                                originalTextParts.forEach((part, index) => {
-                                    if (index % 2 === 1) {
-                                        parts.push(<Highlight key={blankIndex}>{part}</Highlight>);
-                                        blankIndex++;
-                                    } else {
-                                        parts.push(<span key={parts.length}>{part}</span>);
-                                    }
-                                });
-                                return parts;
-                            }
-                            return originalText;
-                        })()}
-                    </p>
-                    <button onClick={handleConfirmComparison}>确认</button>
-                </div>
-            )}
+                {showComparison && !showChoices && (
+                    <ComparisonComponent 
+                        blanksArray={getNestedObjectValue(newsDetailData, 'blankAndAnswer')}
+                        inputValues={inputValues}
+                        handleConfirmComparison={handleConfirmComparison}
+                    />
+                )}
             {/* 第三步：选择题 */}
             {showChoices && (
                 <div>
