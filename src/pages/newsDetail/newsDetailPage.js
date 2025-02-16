@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
-import { Container, TitleSection, BlanksContainer } from "./newsDetailPage.style";
+import { Container, TitleSection, BlanksContainer, Highlight } from "./newsDetailPage.style";
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import FetchNewsDetailEntry from "../../api/newsDetail";
 import { useEffect, useState } from 'react';
 import { RichtextContent } from "../../components/common/richtextContent/richtextContent.style";
 import Footer from "../../components/common/footer/footer";
 import getNestedObjectValue from "../../common_check/getValue";
+import FillInTheBlankComponent from "../../components/contents/fillInTheBlankComponent";
 
 function NewsDetailPage() {
     let { newsId } = useParams();
@@ -14,6 +15,7 @@ function NewsDetailPage() {
     const [showComparison, setShowComparison] = useState(false); // 控制是否显示对比结果
     const [showChoices, setShowChoices] = useState(false); // 控制是否显示选择题
     const [selectedChoice, setSelectedChoice] = useState(null); // 存储用户选择的选项
+    const [inputValues, setInputValues] = useState([]);
 
     useEffect(() => {
         FetchNewsDetailEntry(newsId).then(data => setNewsDetailData(data));
@@ -28,6 +30,20 @@ function NewsDetailPage() {
 
     // 处理用户提交答案
     const handleSubmit = () => {
+        const blanks = getNestedObjectValue(newsDetailData, 'fillInTheBlank');
+        if (blanks) {
+            let answer = '';
+            let blankIndex = 0;
+            blanks.split(/(_+)/).forEach(part => {
+                if (part.match(/_+/)) {
+                    answer += inputValues[blankIndex] || '';
+                    blankIndex++;
+                } else {
+                    answer += part;
+                }
+            });
+            setUserAnswer(answer);
+        }
         setShowComparison(true);
     };
 
@@ -41,6 +57,12 @@ function NewsDetailPage() {
         setSelectedChoice(choice);
     };
 
+    const handleInputChange = (index) => (e) => {
+        const newValues = [...inputValues];
+        newValues[index] = e.target.value;
+        setInputValues(newValues);
+    };
+
     return (
         <Container>
             <TitleSection>
@@ -49,51 +71,60 @@ function NewsDetailPage() {
             <div>
                 <img alt="" width={400} src={getNestedObjectValue(newsDetailData, 'image.fields.file.url')} />
             </div>
-            {/* 第一步：听力练习 */}
-            {!showComparison && !showChoices && (
-                <div>
-                    <audio src={audioUrl} controls></audio>
-                    {/* 获取填空问题内容 */}
-                    {(() => {
-                        const blanks = getNestedObjectValue(newsDetailData, 'fillInTheBlank');
-                        if (!blanks) return null;
-                        // 计算空格数量
-                        const blankCount = (blanks.match(/_+/g) || []).length;
-                        const inputValues = Array(blankCount).fill('');
-                        const handleInputChange = (index) => (e) => {
-                            const newValues = [...inputValues];
-                            newValues[index] = e.target.value;
-                            // 这里可以根据需求更新 userAnswer 或者其他状态
-                        };
-                        return (
-                            <BlanksContainer>
-                                {/* 显示填空问题内容，将空格替换为输入框 */}
-                                {blanks.split(/(_+)/).map((part, index) => {
-                                    if (part.match(/_+/)) {
-                                        const blankIndex = (blanks.split(/(_+)/).slice(0, index).filter(p => p.match(/_+/)).length);
-                                        return (
-                                            <input
-                                                key={index}
-                                                type="text"
-                                                value={inputValues[blankIndex]}
-                                                onChange={handleInputChange(blankIndex)}
-                                                placeholder=""
-                                            />
-                                        );
-                                    }
-                                    return <span key={index}>{part}</span>;
-                                })}
-                                <button onClick={handleSubmit}>submit</button>
-                            </BlanksContainer>
-                        );
-                    })()}
-                </div>
-            )}
+            <div>
+                <audio src={audioUrl} controls></audio>
+            </div>
+            <BlanksContainer>
+                {!showComparison && !showChoices && (
+                    <FillInTheBlankComponent
+                        blanksArray={getNestedObjectValue(newsDetailData, 'blankAndAnswer')}
+                        handleSubmit={handleSubmit}
+                        inputValues={inputValues}
+                        setInputValues={setInputValues}
+                    />
+                )}
             {/* 第二步：对比答案 */}
             {showComparison && !showChoices && (
                 <div>
-                    <p>用户输入：{userAnswer}</p>
-                    <p>原文：{originalText}</p>
+                    <p>用户输入：
+                    {(() => {
+                            const blanks = getNestedObjectValue(newsDetailData, 'fillInTheBlank');
+                            if (blanks) {
+                                const parts = [];
+                                let blankIndex = 0;
+                                blanks.split(/(_+)/).forEach(part => {
+                                    if (part.match(/_+/)) {
+                                        parts.push(<Highlight key={blankIndex}>{inputValues[blankIndex] || ''}</Highlight>);
+                                        blankIndex++;
+                                    } else {
+                                        parts.push(<span key={parts.length}>{part}</span>);
+                                    }
+                                });
+                                return parts;
+                            }
+                            return userAnswer;
+                        })()}
+                    </p>
+                    <p>原文：
+                    {(() => {
+                            const blanks = getNestedObjectValue(newsDetailData, 'fillInTheBlank');
+                            if (blanks) {
+                                const parts = [];
+                                let blankIndex = 0;
+                                let originalTextParts = originalText.split(new RegExp(blanks.replace(/_+/g, '(.*?)')));
+                                originalTextParts.forEach((part, index) => {
+                                    if (index % 2 === 1) {
+                                        parts.push(<Highlight key={blankIndex}>{part}</Highlight>);
+                                        blankIndex++;
+                                    } else {
+                                        parts.push(<span key={parts.length}>{part}</span>);
+                                    }
+                                });
+                                return parts;
+                            }
+                            return originalText;
+                        })()}
+                    </p>
                     <button onClick={handleConfirmComparison}>确认</button>
                 </div>
             )}
@@ -106,6 +137,7 @@ function NewsDetailPage() {
                     {selectedChoice && <p>正确答案：{originalText}</p>}
                 </div>
             )}
+            </BlanksContainer>
             <RichtextContent>{documentToReactComponents(newsDetailData.keywords)}</RichtextContent>
             <Footer />
         </Container>

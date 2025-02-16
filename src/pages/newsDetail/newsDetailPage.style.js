@@ -38,17 +38,25 @@ export const StyledImage = styled.img`
 
 export const BlanksContainer = styled.div`
     padding-left: 100px;
-
+    padding-right: 100px;
+    font-size: 20px;
+    line-height: 2;
     span {
-        display: inline;
+      display: inline;
     }
 
     input {
-        display: inline;
+      display: inline;
     }
 
     button {
-        display: block;
-        margin: 0 auto;
+      font-size: 20px;
+      display: block;
+      margin: 30px auto 0;
+      padding: 10px;
     }
+`;
+
+export const Highlight = styled.span`
+  background-color: yellow;
 `;
