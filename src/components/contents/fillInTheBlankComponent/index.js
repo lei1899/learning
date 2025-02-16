@@ -32,7 +32,6 @@ const FillInTheBlankComponent = ({ blanksArray, handleSubmit, inputValues, setIn
                     <>
                         {item.fields.blank.split(/(_+)/).map((part, innerIndex) => {
                             if (part.match(/_+/)) {
-                                console.log("==answerLength==", item.fields.answer);
                                 const answerLength = item.fields.answer ? item.fields.answer.length : 10;
                                 const input = (
                                     <input

@@ -6,13 +6,13 @@ import { useEffect, useState } from 'react';
 import { RichtextContent } from "../../components/common/richtextContent/richtextContent.style";
 import Footer from "../../components/common/footer/footer";
 import getNestedObjectValue from "../../common_check/getValue";
+import AudioPlayer from "../../components/contents/audioPlayerComponent";
 import FillInTheBlankComponent from "../../components/contents/fillInTheBlankComponent";
 import ComparisonComponent from "../../components/contents/comparisonComponent";
 
 function NewsDetailPage() {
     let { newsId } = useParams();
     const [newsDetailData, setNewsDetailData] = useState(null);
-    const [userAnswer, setUserAnswer] = useState(''); // 存储用户输入的答案
     const [showComparison, setShowComparison] = useState(false); // 控制是否显示对比结果
     const [showChoices, setShowChoices] = useState(false); // 控制是否显示选择题
     const [selectedChoice, setSelectedChoice] = useState(null); // 存储用户选择的选项
@@ -31,20 +31,6 @@ function NewsDetailPage() {
 
     // 处理用户提交答案
     const handleSubmit = () => {
-        const blanks = getNestedObjectValue(newsDetailData, 'fillInTheBlank');
-        if (blanks) {
-            let answer = '';
-            let blankIndex = 0;
-            blanks.split(/(_+)/).forEach(part => {
-                if (part.match(/_+/)) {
-                    answer += inputValues[blankIndex] || '';
-                    blankIndex++;
-                } else {
-                    answer += part;
-                }
-            });
-            setUserAnswer(answer);
-        }
         setShowComparison(true);
     };
 
@@ -58,12 +44,6 @@ function NewsDetailPage() {
         setSelectedChoice(choice);
     };
 
-    const handleInputChange = (index) => (e) => {
-        const newValues = [...inputValues];
-        newValues[index] = e.target.value;
-        setInputValues(newValues);
-    };
-
     return (
         <Container>
             <TitleSection>
@@ -73,7 +53,8 @@ function NewsDetailPage() {
                 <img alt="" width={400} src={getNestedObjectValue(newsDetailData, 'image.fields.file.url')} />
             </div>
             <div>
-                <audio src={audioUrl} controls></audio>
+                <AudioPlayer src={audioUrl}></AudioPlayer>
+                {/* <audio src={audioUrl} controls></audio> */}
             </div>
             <BlanksContainer>
                 {!showComparison && !showChoices && (
