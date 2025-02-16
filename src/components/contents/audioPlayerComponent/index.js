@@ -1,9 +1,25 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { PlayerButton, PlayerButtonGroup } from './style';
 
 const AudioPlayer = ({src}) => {
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
+
+    useEffect(() => {
+        const audioElement = audioRef.current;
+        if (audioElement) {
+            const handlePlay = () => setIsPlaying(true);
+            const handlePause = () => setIsPlaying(false);
+
+            audioElement.addEventListener('play', handlePlay);
+            audioElement.addEventListener('pause', handlePause);
+
+            return () => {
+                audioElement.removeEventListener('play', handlePlay);
+                audioElement.removeEventListener('pause', handlePause);
+            };
+        }
+    }, []);
 
     const togglePlayPause = () => {
         if (isPlaying) {
