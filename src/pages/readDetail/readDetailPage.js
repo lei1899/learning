@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { RichtextContent } from "../../components/common/richtextContent/richtextContent.style";
 import Footer from "../../components/common/footer/footer";
 import getNestedObjectValue from "../../common_check/getValue";
-import AudioPlayer from "../../components/contents/audioPlayerComponent";
+import PdfReader from "../../components/contents/pdfReaderComponent";
 import FillInTheBlankComponent from "../../components/contents/fillInTheBlankComponent";
 import ComparisonComponent from "../../components/contents/comparisonComponent";
 import { handleSubmitAndSendEmail } from "../../emailSender/emailSubmitHandler";
@@ -27,7 +27,7 @@ function ReadDetailPage() {
         return <></>;
     }
 
-    const audioUrl = getNestedObjectValue(newsDetailData, 'audio.fields.file.url');
+    const pdfUrl = getNestedObjectValue(newsDetailData, 'pdf.fields.file.url');
     const originalText = getNestedObjectValue(newsDetailData, 'listenAnswer'); // 原文内容在 keywords 字段
 
     // 处理用户提交答案
@@ -52,10 +52,7 @@ function ReadDetailPage() {
                 <h4>{newsDetailData.title}</h4>
             </TitleSection>
             <div>
-                <img alt="" width={400} src={getNestedObjectValue(newsDetailData, 'image.fields.file.url')} />
-            </div>
-            <div>
-                <AudioPlayer src={audioUrl}></AudioPlayer>
+                <PdfReader src={pdfUrl}></PdfReader>
             </div>
             <BlanksContainer>
                 {!showComparison && !showChoices && (

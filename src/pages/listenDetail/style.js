@@ -7,6 +7,9 @@ export const Container = styled(PageContainer)`
   flex-direction: column;
   align-items: center; // 让子元素在交叉轴（垂直方向）上居中
   justify-content: center; // 让子元素在主轴（水平方向）上居中
+  width: calc(100% - 40px); // 宽度铺满减去前后 20px 的间距
+  margin-left: 20px; // 左边距 20px
+  margin-right: 20px; // 右边距 20px
 `;
 
 export const TitleSection = styled(QuoteCard)`

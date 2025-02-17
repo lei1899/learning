@@ -13,7 +13,7 @@ export const TitleSection = styled(QuoteCard)`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  margin-bottom: 100px;
+  margin-bottom: 20px;
   @media screen and (max-width: 769px) {
     margin-bottom: 0;
   }
