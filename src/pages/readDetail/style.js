@@ -25,10 +25,6 @@ export const TitleSection = styled(QuoteCard)`
   }
 `;
 
-export const StyledImage = styled.img`
-    width: 400px;
-`;
-
 export const BlanksContainer = styled.div`
     padding-left: 100px;
     padding-right: 100px;
@@ -48,4 +44,11 @@ export const BlanksContainer = styled.div`
       margin: 30px auto 0;
       padding: 10px;
     }
+`;
+
+export const StyledTextarea = styled.textarea`
+  font-size: 20px;
+  line-height: 2;
+  margin: 30px auto 0;
+  padding: 10px;
 `;

@@ -1,23 +1,17 @@
 import { useParams } from "react-router-dom";
 import { Container, TitleSection, BlanksContainer } from "./style";
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import FetchNewsDetailEntry from "../../api/newsDetail";
 import { useEffect, useState } from 'react';
-import { RichtextContent } from "../../components/common/richtextContent/richtextContent.style";
 import Footer from "../../components/common/footer/footer";
 import getNestedObjectValue from "../../common_check/getValue";
 import PdfReader from "../../components/contents/pdfReaderComponent";
-import FillInTheBlankComponent from "../../components/contents/fillInTheBlankComponent";
-import ComparisonComponent from "../../components/contents/comparisonComponent";
-import { handleSubmitAndSendEmail } from "../../emailSender/emailSubmitHandler";
+import { StyledTextarea } from "./style";
 
 function ReadDetailPage() {
     let { detailId } = useParams();
     const [newsDetailData, setNewsDetailData] = useState(null);
-    const [showComparison, setShowComparison] = useState(false); // 控制是否显示对比结果
-    const [showChoices, setShowChoices] = useState(false); // 控制是否显示选择题
-    const [selectedChoice, setSelectedChoice] = useState(null); // 存储用户选择的选项
-    const [inputValues, setInputValues] = useState([]);
+    const [showWriteWords, setShowWriteWords] = useState(true);
+    const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
         FetchNewsDetailEntry(detailId).then(data => setNewsDetailData(data));
@@ -28,22 +22,10 @@ function ReadDetailPage() {
     }
 
     const pdfUrl = getNestedObjectValue(newsDetailData, 'pdf.fields.file.url');
-    const originalText = getNestedObjectValue(newsDetailData, 'listenAnswer'); // 原文内容在 keywords 字段
 
     // 处理用户提交答案
     const handleSubmit = () => {
-        handleSubmitAndSendEmail(null, 'testsa');
-        setShowComparison(true);
-    };
-
-    // 处理用户确认对比结果
-    const handleConfirmComparison = () => {
-        setShowChoices(true);
-    };
-
-    // 处理用户选择选项
-    const handleChoiceSelect = (choice) => {
-        setSelectedChoice(choice);
+        setShowWriteWords(false);
     };
 
     return (
@@ -55,32 +37,18 @@ function ReadDetailPage() {
                 <PdfReader src={pdfUrl}></PdfReader>
             </div>
             <BlanksContainer>
-                {!showComparison && !showChoices && (
-                    <FillInTheBlankComponent
-                        blanksArray={getNestedObjectValue(newsDetailData, 'blankAndAnswer')}
-                        handleSubmit={handleSubmit}
-                        inputValues={inputValues}
-                        setInputValues={setInputValues}
+                {showWriteWords && (
+                    <div>
+                    <p>1. Can you write one or two sentences to describe what this page is about?</p>
+                    <StyledTextarea
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        rows={4}
+                        cols={100}
                     />
+                    </div>
                 )}
-                {showComparison && !showChoices && (
-                    <ComparisonComponent 
-                        blanksArray={getNestedObjectValue(newsDetailData, 'blankAndAnswer')}
-                        inputValues={inputValues}
-                        handleConfirmComparison={handleConfirmComparison}
-                    />
-                )}
-            {/* 第三步：选择题 */}
-            {showChoices && (
-                <div>
-                    <p>请选择正确的内容：</p>
-                    <button onClick={() => handleChoiceSelect(originalText)}>{originalText}</button>
-                    {/* 这里可以添加更多选项，根据实际需求 */}
-                    {selectedChoice && <p>正确答案：{originalText}</p>}
-                </div>
-            )}
             </BlanksContainer>
-            <RichtextContent>{documentToReactComponents(newsDetailData.keywords)}</RichtextContent>
             <Footer />
         </Container>
     );

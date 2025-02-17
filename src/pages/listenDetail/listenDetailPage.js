@@ -73,15 +73,11 @@ function ListenDetailPage() {
                         handleConfirmComparison={handleConfirmComparison}
                     />
                 )}
-            {/* 第三步：选择题 */}
-            {showChoices && (
-                <div>
-                    <p>请选择正确的内容：</p>
-                    <button onClick={() => handleChoiceSelect(originalText)}>{originalText}</button>
-                    {/* 这里可以添加更多选项，根据实际需求 */}
-                    {selectedChoice && <p>正确答案：{originalText}</p>}
-                </div>
-            )}
+                {showChoices && (
+                    <div>
+                        <p>Email is sent.</p>
+                    </div>
+                )}
             </BlanksContainer>
             <RichtextContent>{documentToReactComponents(newsDetailData.keywords)}</RichtextContent>
             <Footer />

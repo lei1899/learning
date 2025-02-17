@@ -38,13 +38,13 @@ const ComparisonComponent = ({ blanksArray, inputValues, handleConfirmComparison
 
     return (
         <div>
-            <p>用户输入：
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yours:&nbsp;
                 {renderText(true)}
             </p>
-            <p>原文：
+            <p>Original text:&nbsp;
                 {renderText(false)}
             </p>
-            <button onClick={handleConfirmComparison}>确认</button>
+            <button onClick={handleConfirmComparison}>&nbsp;&nbsp;ok&nbsp;&nbsp;</button>
         </div>
     );
 };

@@ -5,5 +5,6 @@ export const Highlight = styled.span`
 `;
 
 export const AnswerHighlight = styled.span`
-  background-color: red;
+  background-color: green;
+  color: white;
 `;
