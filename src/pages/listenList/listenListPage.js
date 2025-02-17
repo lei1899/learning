@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
-import { Container } from "./newsPage.style";
+import { useParams } from "react-router-dom";
+import { Container } from "./style";
 import FetchNewsEntry from "../../api/news";
 import NewsSection from "../../components/news/newsSection/newsSection";
 
-function NewsPage() {
+function ListenListPage() {
+    const { listId } = useParams();
     const [newData, setNewData] = useState(null);
 
     useEffect(() => {
-        document.title = "News Element Fleet Management";
         window.scrollTo(0, 0);
-        FetchNewsEntry().then(data => setNewData(data));
-    }, []);
+        FetchNewsEntry(listId).then(data => setNewData(data));
+    }, [listId]);
 
     if (!newData) {
         return <> </>;
     }
+
     return (
         <Container>
-            <NewsSection data={newData}></NewsSection>
+            <NewsSection data={newData} detailRoute={'listenDetail'}></NewsSection>
         </Container>
     );
 }
-export default NewsPage;
+export default ListenListPage;

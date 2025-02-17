@@ -5,9 +5,11 @@ import {
 } from "react-router-dom"
 import GlobalStyle from './globalStyle';
 import HomePage from "./pages/home/homePage";
-import NewsPage from "./pages/news/newsPage";
 import NavBar from "./components/common/navBar/navBar";
-import NewsDetailPage from './pages/newsDetail/newsDetailPage';
+import ListenListPage from "./pages/listenList/listenListPage";
+import ListenDetailPage from "./pages/listenDetail/listenDetailPage";
+import ReadListPage from "./pages/readList/readListPage";
+import ReadDetailPage from "./pages/readDetail/readDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -23,12 +25,20 @@ const router = createBrowserRouter([
         element: <HomePage/>
       },
       {
-        path: "news",
-        element: <NewsPage/>
+        path: "listenList/:listId",
+        element: <ListenListPage/>
       },
       {
-        path: "news/:newsId",
-        element: <NewsDetailPage/>
+        path: "listenDetail/:detailId",
+        element: <ListenDetailPage/>
+      },
+      {
+        path: "readList/:listId",
+        element: <ReadListPage/>
+      },
+      {
+        path: "readDetail/:detailId",
+        element: <ReadDetailPage/>
       }
     ]
   }

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Container, TitleSection, BlanksContainer } from "./newsDetailPage.style";
+import { Container, TitleSection, BlanksContainer } from "./style";
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import FetchNewsDetailEntry from "../../api/newsDetail";
 import { useEffect, useState } from 'react';
@@ -11,8 +11,8 @@ import FillInTheBlankComponent from "../../components/contents/fillInTheBlankCom
 import ComparisonComponent from "../../components/contents/comparisonComponent";
 import { handleSubmitAndSendEmail } from "../../emailSender/emailSubmitHandler";
 
-function NewsDetailPage() {
-    let { newsId } = useParams();
+function ReadDetailPage() {
+    let { detailId } = useParams();
     const [newsDetailData, setNewsDetailData] = useState(null);
     const [showComparison, setShowComparison] = useState(false); // 控制是否显示对比结果
     const [showChoices, setShowChoices] = useState(false); // 控制是否显示选择题
@@ -20,8 +20,8 @@ function NewsDetailPage() {
     const [inputValues, setInputValues] = useState([]);
 
     useEffect(() => {
-        FetchNewsDetailEntry(newsId).then(data => setNewsDetailData(data));
-    }, [newsId]);
+        FetchNewsDetailEntry(detailId).then(data => setNewsDetailData(data));
+    }, [detailId]);
 
     if (!newsDetailData) {
         return <></>;
@@ -49,14 +49,13 @@ function NewsDetailPage() {
     return (
         <Container>
             <TitleSection>
-                <h1>{newsDetailData.title}</h1>
+                <h4>{newsDetailData.title}</h4>
             </TitleSection>
             <div>
                 <img alt="" width={400} src={getNestedObjectValue(newsDetailData, 'image.fields.file.url')} />
             </div>
             <div>
                 <AudioPlayer src={audioUrl}></AudioPlayer>
-                // 答案对比，发邮件
             </div>
             <BlanksContainer>
                 {!showComparison && !showChoices && (
@@ -90,4 +89,4 @@ function NewsDetailPage() {
     );
 }
 
-export default NewsDetailPage;
+export default ReadDetailPage;

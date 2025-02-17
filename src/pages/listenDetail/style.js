@@ -23,13 +23,6 @@ export const TitleSection = styled(QuoteCard)`
   h4 {
     padding-left: 1rem;
   }
-  img {
-    transform: translateY(100px);
-    object-fit: cover;
-    max-width: 90%;
-    max-height: 400px;
-    overflow: hidden;
-  }
 `;
 
 export const StyledImage = styled.img`
