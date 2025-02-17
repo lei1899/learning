@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Container, TitleSection, BlanksContainer, Highlight } from "./newsDetailPage.style";
+import { Container, TitleSection, BlanksContainer } from "./newsDetailPage.style";
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import FetchNewsDetailEntry from "../../api/newsDetail";
 import { useEffect, useState } from 'react';
@@ -9,6 +9,7 @@ import getNestedObjectValue from "../../common_check/getValue";
 import AudioPlayer from "../../components/contents/audioPlayerComponent";
 import FillInTheBlankComponent from "../../components/contents/fillInTheBlankComponent";
 import ComparisonComponent from "../../components/contents/comparisonComponent";
+import { handleSubmitAndSendEmail } from "../../emailSender/emailSubmitHandler";
 
 function NewsDetailPage() {
     let { newsId } = useParams();
@@ -31,6 +32,7 @@ function NewsDetailPage() {
 
     // 处理用户提交答案
     const handleSubmit = () => {
+        handleSubmitAndSendEmail(null, 'testsa');
         setShowComparison(true);
     };
 
@@ -54,7 +56,7 @@ function NewsDetailPage() {
             </div>
             <div>
                 <AudioPlayer src={audioUrl}></AudioPlayer>
-                {/* <audio src={audioUrl} controls></audio> */}
+                // 答案对比，发邮件
             </div>
             <BlanksContainer>
                 {!showComparison && !showChoices && (
