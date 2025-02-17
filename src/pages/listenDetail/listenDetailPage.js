@@ -8,7 +8,7 @@ import Footer from "../../components/common/footer/footer";
 import getNestedObjectValue from "../../common_check/getValue";
 import AudioPlayer from "../../components/contents/audioPlayerComponent";
 import FillInTheBlankComponent from "../../components/contents/fillInTheBlankComponent";
-import ComparisonComponent from "../../components/contents/comparisonComponent";
+import ComparisonComponent, { getComparisonText } from "../../components/contents/comparisonComponent";
 import { handleSubmitAndSendEmail } from "../../emailSender/emailSubmitHandler";
 
 function ListenDetailPage() {
@@ -28,11 +28,11 @@ function ListenDetailPage() {
     }
 
     const audioUrl = getNestedObjectValue(newsDetailData, 'audio.fields.file.url');
-    const originalText = getNestedObjectValue(newsDetailData, 'listenAnswer'); // 原文内容在 keywords 字段
+    const blanksArray = getNestedObjectValue(newsDetailData, 'blankAndAnswer');
 
     // 处理用户提交答案
     const handleSubmit = () => {
-        handleSubmitAndSendEmail(null, 'testsa');
+        handleSubmitAndSendEmail(null, getComparisonText({ blanksArray, inputValues }));
         setShowComparison(true);
     };
 
@@ -60,7 +60,7 @@ function ListenDetailPage() {
             <BlanksContainer>
                 {!showComparison && !showChoices && (
                     <FillInTheBlankComponent
-                        blanksArray={getNestedObjectValue(newsDetailData, 'blankAndAnswer')}
+                        blanksArray={blanksArray}
                         handleSubmit={handleSubmit}
                         inputValues={inputValues}
                         setInputValues={setInputValues}
@@ -68,7 +68,7 @@ function ListenDetailPage() {
                 )}
                 {showComparison && !showChoices && (
                     <ComparisonComponent 
-                        blanksArray={getNestedObjectValue(newsDetailData, 'blankAndAnswer')}
+                        blanksArray={blanksArray}
                         inputValues={inputValues}
                         handleConfirmComparison={handleConfirmComparison}
                     />
