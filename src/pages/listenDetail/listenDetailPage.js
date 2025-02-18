@@ -30,20 +30,13 @@ function ListenDetailPage() {
     const audioUrl = getNestedObjectValue(newsDetailData, 'audio.fields.file.url');
     const blanksArray = getNestedObjectValue(newsDetailData, 'blankAndAnswer');
 
-    // 处理用户提交答案
     const handleSubmit = () => {
         handleSubmitAndSendEmail(null, getComparisonText({ blanksArray, inputValues }));
         setShowComparison(true);
     };
 
-    // 处理用户确认对比结果
     const handleConfirmComparison = () => {
         setShowChoices(true);
-    };
-
-    // 处理用户选择选项
-    const handleChoiceSelect = (choice) => {
-        setSelectedChoice(choice);
     };
 
     return (

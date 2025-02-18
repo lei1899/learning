@@ -51,7 +51,6 @@ const ComparisonComponent = ({ blanksArray, inputValues, handleConfirmComparison
 };
 
 export const getComparisonText = ({ blanksArray, inputValues }) => {
-    console.log("==inputValues==", inputValues);
     const yoursText = ReactDOMServer.renderToStaticMarkup(renderText({ blanksArray, inputValues, isUserInput: true })).replace(/<[^>]*>/g, '');
     const originalText = ReactDOMServer.renderToStaticMarkup(renderText({ blanksArray, inputValues, isUserInput: false })).replace(/<[^>]*>/g, '');
     return `Yours: ${yoursText} \n Original: ${originalText}`;

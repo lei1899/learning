@@ -5,12 +5,14 @@ import { useEffect, useState } from 'react';
 import Footer from "../../components/common/footer/footer";
 import getNestedObjectValue from "../../common_check/getValue";
 import PdfReader from "../../components/contents/pdfReaderComponent";
+import { handleSubmitAndSendEmail } from "../../emailSender/emailSubmitHandler";
 import { StyledTextarea } from "./style";
 
 function ReadDetailPage() {
     let { detailId } = useParams();
     const [newsDetailData, setNewsDetailData] = useState(null);
     const [showWriteWords, setShowWriteWords] = useState(true);
+    const [showResult, setShowResult] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
@@ -25,7 +27,9 @@ function ReadDetailPage() {
 
     // 处理用户提交答案
     const handleSubmit = () => {
+        handleSubmitAndSendEmail(null, inputValue);
         setShowWriteWords(false);
+        setShowResult(true);
     };
 
     return (
@@ -46,6 +50,12 @@ function ReadDetailPage() {
                         rows={4}
                         cols={100}
                     />
+                    <button onClick={handleSubmit}>submit</button>
+                    </div>
+                )}
+                {showResult && (
+                    <div>
+                        <p>Email is sent.</p>
                     </div>
                 )}
             </BlanksContainer>
