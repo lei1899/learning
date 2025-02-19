@@ -27,7 +27,7 @@ function ReadDetailPage() {
 
     // 处理用户提交答案
     const handleSubmit = () => {
-        handleSubmitAndSendEmail(null, inputValue);
+        handleSubmitAndSendEmail(null, inputValue, 'template_write_submit');
         setShowWriteWords(false);
         setShowResult(true);
     };

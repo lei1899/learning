@@ -16,7 +16,6 @@ function ListenDetailPage() {
     const [newsDetailData, setNewsDetailData] = useState(null);
     const [showComparison, setShowComparison] = useState(false); // 控制是否显示对比结果
     const [showChoices, setShowChoices] = useState(false); // 控制是否显示选择题
-    const [selectedChoice, setSelectedChoice] = useState(null); // 存储用户选择的选项
     const [inputValues, setInputValues] = useState([]);
 
     useEffect(() => {
@@ -31,7 +30,7 @@ function ListenDetailPage() {
     const blanksArray = getNestedObjectValue(newsDetailData, 'blankAndAnswer');
 
     const handleSubmit = () => {
-        handleSubmitAndSendEmail(null, getComparisonText({ blanksArray, inputValues }));
+        handleSubmitAndSendEmail(null, getComparisonText({ blanksArray, inputValues }), 'template_listen_submit');
         setShowComparison(true);
     };
 

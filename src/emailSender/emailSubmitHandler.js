@@ -1,9 +1,8 @@
 import emailjs from '@emailjs/browser';
 
-export const handleSubmitAndSendEmail = (handleSubmit, inputValues) => {
+export const handleSubmitAndSendEmail = (handleSubmit, inputValues, templateID) => {
     const serviceID = process.env.REACT_APP_EMAIL_JS_SERVICE_ID;
     const userID = process.env.REACT_APP_EMAIL_JS_USER_ID;
-    const templateID = 'template_listen_submit';
 
     const templateParams = {
         message: inputValues,
