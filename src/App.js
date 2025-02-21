@@ -33,11 +33,11 @@ const router = createBrowserRouter([
         element: <ListenDetailPage/>
       },
       {
-        path: "readDetail/:id",
+        path: "read/:id",
         element: <ReadDetailPage/>
       },
       {
-        path: "writeDetail/:id",
+        path: "write/:id",
         element: <WriteDetailPage/>
       }
     ]
