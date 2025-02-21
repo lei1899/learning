@@ -9,15 +9,15 @@ import { handleSubmitAndSendEmail } from "../../emailSender/emailSubmitHandler";
 import { StyledTextarea } from "./style";
 
 function ReadDetailPage() {
-    let { detailId } = useParams();
+    let { id } = useParams();
     const [newsDetailData, setNewsDetailData] = useState(null);
     const [showWriteWords, setShowWriteWords] = useState(true);
     const [showResult, setShowResult] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
-        FetchEntry(detailId).then(data => setNewsDetailData(data));
-    }, [detailId]);
+        FetchEntry(id).then(data => setNewsDetailData(data));
+    }, [id]);
 
     if (!newsDetailData) {
         return <></>;

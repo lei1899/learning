@@ -8,12 +8,12 @@ import PdfReader from "../../components/contents/pdfReaderComponent";
 import AudioPlayer from "../../components/contents/audioPlayerComponent";
 
 function WriteDetailPage() {
-    let { detailId } = useParams();
+    let { id } = useParams();
     const [newsDetailData, setNewsDetailData] = useState(null);
 
     useEffect(() => {
-        FetchEntry(detailId).then(data => setNewsDetailData(data));
-    }, [detailId]);
+        FetchEntry(id).then(data => setNewsDetailData(data));
+    }, [id]);
 
     if (!newsDetailData) {
         return <></>;

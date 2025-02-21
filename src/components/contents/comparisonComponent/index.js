@@ -17,6 +17,7 @@ const renderUserText = ({ blankString, inputValues }) => {
         </>
     );};
 const renderInitText = ({ blankString }) => {
+    console.log("====string=", blankString);
     if (typeof blankString !== 'string') {
         return <></>;
     }
@@ -45,8 +46,13 @@ const ComparisonComponent = ({ blankString, inputValues, handleConfirmComparison
 
 export const getComparisonText = ({ blankString, inputValues }) => {
     const yoursText = ReactDOMServer.renderToStaticMarkup(renderUserText({ blankString, inputValues })).replace(/<[^>]*>/g, '');
-    const originalText = ReactDOMServer.renderToStaticMarkup(renderInitText({ blankString})).replace(/<[^>]*>/g, '');
+    const originalText = ReactDOMServer.renderToStaticMarkup(renderInitText({ blankString })).replace(/<[^>]*>/g, '');
     return `Yours: ${yoursText} \n Original: ${originalText}`;
+};
+
+export const getInitText = ({ blanks }) => {
+    const initText = ReactDOMServer.renderToStaticMarkup(renderInitText( {blankString:blanks} )).replace(/<[^>]*>/g, '');
+    return <p>{initText}</p>;
 };
 
 export default ComparisonComponent;

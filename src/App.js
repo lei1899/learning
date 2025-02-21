@@ -7,9 +7,9 @@ import GlobalStyle from './globalStyle';
 import HomePage from "./pages/home/homePage";
 import NavBar from "./components/common/navBar/navBar";
 import ListPage from "./pages/list/listPage";
-import ListenDetailPage from "./pages/listenDetail/listenDetailPage";
-import ReadDetailPage from "./pages/readDetail/readDetailPage";
-import WriteDetailPage from "./pages/writeDetail/writeDetailPage";
+import ListenDetailPage from "./pages/listenDetail";
+import ReadDetailPage from "./pages/readDetail";
+import WriteDetailPage from "./pages/writeDetail";
 
 const router = createBrowserRouter([
   {
@@ -33,11 +33,11 @@ const router = createBrowserRouter([
         element: <ListenDetailPage/>
       },
       {
-        path: "readDetail/:detailId",
+        path: "readDetail/:id",
         element: <ReadDetailPage/>
       },
       {
-        path: "writeDetail/:detailId",
+        path: "writeDetail/:id",
         element: <WriteDetailPage/>
       }
     ]
