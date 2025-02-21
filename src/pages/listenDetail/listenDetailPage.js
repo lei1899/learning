@@ -10,6 +10,7 @@ import AudioPlayer from "../../components/contents/audioPlayerComponent";
 import FillInTheBlankComponent from "../../components/contents/fillInTheBlankComponent";
 import ComparisonComponent, { getComparisonText } from "../../components/contents/comparisonComponent";
 import { handleSubmitAndSendEmail } from "../../emailSender/emailSubmitHandler";
+import QuizComponent from "../../components/contents/quizComponent";
 
 function ListenDetailPage() {
     let { detailId } = useParams();
@@ -27,10 +28,11 @@ function ListenDetailPage() {
     }
 
     const audioUrl = getNestedObjectValue(newsDetailData, 'audio.fields.file.url');
-    const blanksArray = getNestedObjectValue(newsDetailData, 'blankAndAnswer');
+    const blanks = getNestedObjectValue(newsDetailData, 'blankPart');
+    const quiz = getNestedObjectValue(newsDetailData, 'quiz');
 
     const handleSubmit = () => {
-        handleSubmitAndSendEmail(null, getComparisonText({ blanksArray, inputValues }), 'template_listen_submit');
+        handleSubmitAndSendEmail(null, getComparisonText({ blanks, inputValues }), 'template_listen_submit');
         setShowComparison(true);
     };
 
@@ -52,7 +54,7 @@ function ListenDetailPage() {
             <BlanksContainer>
                 {!showComparison && !showChoices && (
                     <FillInTheBlankComponent
-                        blanksArray={blanksArray}
+                        blankString={blanks}
                         handleSubmit={handleSubmit}
                         inputValues={inputValues}
                         setInputValues={setInputValues}
@@ -60,15 +62,13 @@ function ListenDetailPage() {
                 )}
                 {showComparison && !showChoices && (
                     <ComparisonComponent 
-                        blanksArray={blanksArray}
+                        blankString={blanks}
                         inputValues={inputValues}
                         handleConfirmComparison={handleConfirmComparison}
                     />
                 )}
                 {showChoices && (
-                    <div>
-                        <p>Email is sent.</p>
-                    </div>
+                    <QuizComponent questions={quiz} />
                 )}
             </BlanksContainer>
             <RichtextContent>{documentToReactComponents(newsDetailData.keywords)}</RichtextContent>

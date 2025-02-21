@@ -8,26 +8,38 @@ import {
     SeeMoreButton,
 } from "./newSection.style";
 import validate from "../../../common_check/checkList";
+import getNestedObjectValue from "../../../common_check/getValue";
 
-function _createNewsRow(data, detailRoute) {
+const routes = [
+    { key: 'listenFillAnswer', value: 'listenDetail' },
+    { key: 'readQuestionsWrite', value: 'readDetail' },
+    { key: 'listenReadQuiz', value: 'writeDetail' },
+];
+
+const detailRoute = (route) => {
+    const foundRoute = routes.find(r => r.key === route);
+    return foundRoute ? foundRoute.value : 'readDetail';
+};
+
+function _createNewsRow(data) {
+    const type = getNestedObjectValue(data, 'sys.contentType.sys.id');
     return (
         <NewsRow key={data.sys.id}>
             <div>
                 <h4>{new Date(data.sys.createdAt).toDateString()}</h4>
                 <p>{data.fields.title}</p>
             </div>
-            <ReadMoreButton to={`/${detailRoute}/${data.sys.id}`}>Read more<span/></ReadMoreButton>
+            <ReadMoreButton to={`/${detailRoute(type)}/${data.sys.id}`}>Read more<span/></ReadMoreButton>
         </NewsRow>
     );
 }
 
-function NewsSection ({data, detailRoute}) {
+function NewsSection ({data}) {
     const news_list_maximum = 4;
     const ok = validate(data, news_list_maximum);
     if (!ok) {
         return <></>;
     }
-
     return (
         <Container>
             <HeaderRow>
@@ -35,7 +47,7 @@ function NewsSection ({data, detailRoute}) {
                 <SeeMoreButton>More</SeeMoreButton>
             </HeaderRow>
             <NewsContainer>
-                {data.list.map((e) => _createNewsRow(e, detailRoute))}
+                {data.list.map((e) => _createNewsRow(e))}
             </NewsContainer>
         </Container>
     );

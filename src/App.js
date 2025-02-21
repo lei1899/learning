@@ -6,10 +6,10 @@ import {
 import GlobalStyle from './globalStyle';
 import HomePage from "./pages/home/homePage";
 import NavBar from "./components/common/navBar/navBar";
-import ListenListPage from "./pages/listenList/listenListPage";
+import ListPage from "./pages/list/listPage";
 import ListenDetailPage from "./pages/listenDetail/listenDetailPage";
-import ReadListPage from "./pages/readList/readListPage";
 import ReadDetailPage from "./pages/readDetail/readDetailPage";
+import WriteDetailPage from "./pages/writeDetail/writeDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -25,20 +25,20 @@ const router = createBrowserRouter([
         element: <HomePage/>
       },
       {
-        path: "listenList/:listId",
-        element: <ListenListPage/>
+        path: "list/:listId",
+        element: <ListPage/>
       },
       {
         path: "listenDetail/:detailId",
         element: <ListenDetailPage/>
       },
       {
-        path: "readList/:listId",
-        element: <ReadListPage/>
-      },
-      {
         path: "readDetail/:detailId",
         element: <ReadDetailPage/>
+      },
+      {
+        path: "writeDetail/:detailId",
+        element: <WriteDetailPage/>
       }
     ]
   }

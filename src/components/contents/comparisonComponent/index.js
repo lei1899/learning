@@ -1,58 +1,51 @@
-import React from 'react';
-import { Highlight, AnswerHighlight } from './style';
-import ReactDOMServer from 'react-dom/server';
-
-const renderText = ({ blanksArray, inputValues, isUserInput }) => {
+import React from 'react';import { Highlight, AnswerHighlight } from './style';import ReactDOMServer from 'react-dom/server';
+const renderUserText = ({ blankString, inputValues }) => {
     let currentIndex = 0;
-    if (!blanksArray) {
+    if (!blankString) {
         return <></>;
     }
     return (
         <>
-            {blanksArray.map((item, outerIndex) => {
-                if (!item.fields || !item.fields.blank) {
-                    return null;
+            {blankString.split(/(__.*?__)/).map((part, index) => {
+                if (part.match(/__.*?__/)) {
+                    const inputValue = inputValues[currentIndex];
+                    currentIndex++;
+                    return <Highlight key={index}>{inputValue}</Highlight>;
                 }
-                return (
-                    <>
-                        {item.fields.blank.split(/(_+)/).map((part, innerIndex) => {
-                            if (part.match(/_+/)) {
-                                const highlightComponent = isUserInput ? Highlight : AnswerHighlight;
-                                const value = isUserInput ? inputValues[currentIndex] || '' : item.fields.answer;
-                                const input = React.createElement(
-                                    highlightComponent,
-                                    { key: `${outerIndex}-${innerIndex}` },
-                                    value
-                                );
-                                currentIndex++;
-                                return input;
-                            }
-                            return <span key={`${outerIndex}-${innerIndex}`}>{part}</span>;
-                        })}
-                    </>
-                );
+                return <span key={index}>{part}</span>;
             })}
         </>
-    );
-};
-
-const ComparisonComponent = ({ blanksArray, inputValues, handleConfirmComparison }) => {
+    );};
+const renderInitText = ({ blankString }) => {
+    if (typeof blankString !== 'string') {
+        return <></>;
+    }
+    return (
+        <>
+            {blankString.split(/(__.*?__)/).map((part, index) => {
+                if (part.match(/__.*?__/)) {
+                    return <AnswerHighlight>{part.replace(/__/g, '')}</AnswerHighlight>;
+                }
+                return <span key={index}>{part}</span>; 
+            })}
+        </>
+    );};
+const ComparisonComponent = ({ blankString, inputValues, handleConfirmComparison }) => {
     return (
         <div>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yours:&nbsp;
-                {renderText({ blanksArray, inputValues, isUserInput: true })}
+                {renderUserText({ blankString, inputValues })}
             </p>
             <p>Original text:&nbsp;
-                {renderText({ blanksArray, inputValues, isUserInput: false })}
+                {renderInitText( {blankString} )}
             </p>
             <button onClick={handleConfirmComparison}>&nbsp;&nbsp;ok&nbsp;&nbsp;</button>
         </div>
-    );
-};
+    );};
 
-export const getComparisonText = ({ blanksArray, inputValues }) => {
-    const yoursText = ReactDOMServer.renderToStaticMarkup(renderText({ blanksArray, inputValues, isUserInput: true })).replace(/<[^>]*>/g, '');
-    const originalText = ReactDOMServer.renderToStaticMarkup(renderText({ blanksArray, inputValues, isUserInput: false })).replace(/<[^>]*>/g, '');
+export const getComparisonText = ({ blankString, inputValues }) => {
+    const yoursText = ReactDOMServer.renderToStaticMarkup(renderUserText({ blankString, inputValues })).replace(/<[^>]*>/g, '');
+    const originalText = ReactDOMServer.renderToStaticMarkup(renderInitText({ blankString})).replace(/<[^>]*>/g, '');
     return `Yours: ${yoursText} \n Original: ${originalText}`;
 };
 

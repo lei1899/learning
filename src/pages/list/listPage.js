@@ -4,7 +4,7 @@ import { Container } from "./style";
 import FetchNewsEntry from "../../api/news";
 import NewsSection from "../../components/news/newsSection/newsSection";
 
-function ListenListPage() {
+function ListPage() {
     const { listId } = useParams();
     const [newData, setNewData] = useState(null);
 
@@ -19,8 +19,8 @@ function ListenListPage() {
 
     return (
         <Container>
-            <NewsSection data={newData} detailRoute={'listenDetail'}></NewsSection>
+            <NewsSection data={newData}></NewsSection>
         </Container>
     );
 }
-export default ListenListPage;
+export default ListPage;

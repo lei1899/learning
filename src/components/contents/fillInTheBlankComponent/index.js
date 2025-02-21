@@ -1,58 +1,43 @@
-import React, { useEffect } from 'react';
-
-const FillInTheBlankComponent = ({ blanksArray, handleSubmit, inputValues, setInputValues }) => {
-
+import React, { useEffect } from 'react';import { BlankInput } from "./style";
+const FillInTheBlankComponent = ({ blankString, handleSubmit, inputValues, setInputValues }) => {
     useEffect(() => {
-        if (Array.isArray(blanksArray)) {
-            const totalBlankCount = blanksArray.length;
-            if (inputValues.length === 0) {
-                setInputValues(Array(totalBlankCount).fill(''));
-            }
+        if (typeof blankString !== 'string') {
+            return;
         }
-    }, [blanksArray, inputValues, setInputValues]);
+        const matches = blankString.match(/__(.*?)__/g) || [];
+        setInputValues(matches.map(() => ''));
+    }, [blankString, setInputValues]);
 
-    const handleInputChange = (index) => (e) => {
+    const handleInputChange = (index) => (e) => {   
         const newValues = [...inputValues];
-        newValues[index] = e.target.value;
+        newValues[index] = e.target.value; 
         setInputValues(newValues);
     };
-
-    if (!blanksArray || !Array.isArray(blanksArray)) return null;
+    
+    if (typeof blankString !== 'string') return null;
 
     const allInputsFilled = inputValues.every(value => value.length > 0);
-
     let currentIndex = 0;
     return (
         <>
-            {blanksArray.map((item, outerIndex) => {
-                if (!item.fields || !item.fields.blank) {
-                    return null;
+            {blankString.split(/(__.*?__)/).map((part, index) => {
+                if (part.match(/__.*?__/)) {
+                    const cleanPart = part.replace(/__/g, '');
+                    const input = (
+                        <BlankInput
+                            key={index}
+                            type="text"
+                            value={inputValues[currentIndex]}
+                            onChange={handleInputChange(currentIndex)}
+                            size={cleanPart.length + 2}
+                        />
+                    );
+                    currentIndex++;
+                    return input;
                 }
-                return (
-                    <>
-                        {item.fields.blank.split(/(_+)/).map((part, innerIndex) => {
-                            if (part.match(/_+/)) {
-                                const answerLength = item.fields.answer ? item.fields.answer.length : 10;
-                                const input = (
-                                    <input
-                                        key={`${outerIndex}-${innerIndex}`}
-                                        type="text"
-                                        value={inputValues[currentIndex]}
-                                        onChange={handleInputChange(currentIndex)}
-                                        size={answerLength + 10}
-                                        style={{ fontSize: '16px' }}
-                                    />
-                                );
-                                currentIndex++;
-                                return input;
-                            }
-                            return <span key={`${outerIndex}-${innerIndex}`}>{part}</span>;
-                        })}
-                    </>
-                );
-                
+                return <span key={index}>{part}</span>;
             })}
-            <button disabled={!allInputsFilled} onClick={handleSubmit}>submit</button>
+            <button disabled={!allInputsFilled} onClick={handleSubmit}>Submit</button>
         </>
     );
 };
