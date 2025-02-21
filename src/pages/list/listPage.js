@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container } from "./style";
 import FetchEntry from "../../api/fetchEntry";
-import NewsSection from "../../components/news/newsSection/newsSection";
+import ListSection from "../../components/list/listSection";
 
 function ListPage() {
-    const { listId } = useParams();
+    const { id } = useParams();
     const [newData, setNewData] = useState(null);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        FetchEntry(listId).then(data => setNewData(data));
-    }, [listId]);
+        FetchEntry(id).then(data => setNewData(data));
+    }, [id]);
 
     if (!newData) {
         return <> </>;
@@ -19,7 +19,7 @@ function ListPage() {
 
     return (
         <Container>
-            <NewsSection data={newData}></NewsSection>
+            <ListSection data={newData}></ListSection>
         </Container>
     );
 }

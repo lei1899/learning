@@ -6,14 +6,14 @@ import {
     ReadMoreButton,
     SectionTitle,
     SeeMoreButton,
-} from "./newSection.style";
+} from "./style";
 import validate from "../../../common_check/checkList";
 import getNestedObjectValue from "../../../common_check/getValue";
 
 const routes = [
-    { key: 'listenFillAnswer', value: 'listenDetail' },
-    { key: 'readQuestionsWrite', value: 'readDetail' },
-    { key: 'listenReadQuiz', value: 'writeDetail' },
+    { key: 'listenFillAnswer', value: 'listen' },
+    { key: 'readQuestionsWrite', value: 'read' },
+    { key: 'listenReadQuiz', value: 'write' },
 ];
 
 const detailRoute = (route) => {
@@ -34,7 +34,7 @@ function _createNewsRow(data) {
     );
 }
 
-function NewsSection ({data}) {
+function ListSection ({data}) {
     const news_list_maximum = 4;
     const ok = validate(data, news_list_maximum);
     if (!ok) {
@@ -53,4 +53,4 @@ function NewsSection ({data}) {
     );
 }
 
-export default NewsSection;
+export default ListSection;

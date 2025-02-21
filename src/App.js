@@ -25,11 +25,11 @@ const router = createBrowserRouter([
         element: <HomePage/>
       },
       {
-        path: "list/:listId",
+        path: "list/:id",
         element: <ListPage/>
       },
       {
-        path: "listenDetail/:detailId",
+        path: "listen/:id",
         element: <ListenDetailPage/>
       },
       {
