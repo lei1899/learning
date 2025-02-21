@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { Container, TitleSection, BlanksContainer } from "./style";
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import FetchNewsDetailEntry from "../../api/newsDetail";
+import FetchEntry from "../../api/fetchEntry";
 import { useEffect, useState } from 'react';
 import { RichtextContent } from "../../components/common/richtextContent/richtextContent.style";
 import Footer from "../../components/common/footer/footer";
@@ -20,7 +20,7 @@ function ListenDetailPage() {
     const [inputValues, setInputValues] = useState([]);
 
     useEffect(() => {
-        FetchNewsDetailEntry(detailId).then(data => setNewsDetailData(data));
+        FetchEntry(detailId).then(data => setNewsDetailData(data));
     }, [detailId]);
 
     if (!newsDetailData) {

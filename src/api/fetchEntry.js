@@ -1,8 +1,8 @@
 import client from "./client";
 
-async function FetchNewsEntry(listId) {
+async function FetchEntry(id) {
     try {
-        const entry = await client.getEntry(listId);
+        const entry = await client.getEntry(id);
         if (!entry) return null;
         return entry.fields;
     } catch(err) {
@@ -11,4 +11,4 @@ async function FetchNewsEntry(listId) {
     }
 }
 
-export default FetchNewsEntry;
+export default FetchEntry;

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Container, TitleSection } from "./style";
-import FetchNewsDetailEntry from "../../api/newsDetail";
+import FetchEntry from "../../api/fetchEntry";
 import { useEffect, useState } from 'react';
 import Footer from "../../components/common/footer/footer";
 import getNestedObjectValue from "../../common_check/getValue";
@@ -12,7 +12,7 @@ function WriteDetailPage() {
     const [newsDetailData, setNewsDetailData] = useState(null);
 
     useEffect(() => {
-        FetchNewsDetailEntry(detailId).then(data => setNewsDetailData(data));
+        FetchEntry(detailId).then(data => setNewsDetailData(data));
     }, [detailId]);
 
     if (!newsDetailData) {

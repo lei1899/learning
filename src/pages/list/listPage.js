@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container } from "./style";
-import FetchNewsEntry from "../../api/news";
+import FetchEntry from "../../api/fetchEntry";
 import NewsSection from "../../components/news/newsSection/newsSection";
 
 function ListPage() {
@@ -10,7 +10,7 @@ function ListPage() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        FetchNewsEntry(listId).then(data => setNewData(data));
+        FetchEntry(listId).then(data => setNewData(data));
     }, [listId]);
 
     if (!newData) {
