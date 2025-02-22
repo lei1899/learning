@@ -10,6 +10,7 @@ import ListPage from "./pages/list/listPage";
 import ListenDetailPage from "./pages/listenDetail";
 import ReadDetailPage from "./pages/readDetail";
 import WriteDetailPage from "./pages/writeDetail";
+import VideoDetailPage from "./pages/videoDetail";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "write/:id",
         element: <WriteDetailPage/>
+      },
+      {
+        path: "video/:id",
+        element: <VideoDetailPage/>
       }
     ]
   }

@@ -14,11 +14,12 @@ const routes = [
     { key: 'listenFillAnswer', value: 'listen' },
     { key: 'readQuestionsWrite', value: 'read' },
     { key: 'listenReadQuiz', value: 'write' },
+    { key: 'videoFillQuiz', value: 'video' },
 ];
 
 const detailRoute = (route) => {
     const foundRoute = routes.find(r => r.key === route);
-    return foundRoute ? foundRoute.value : 'readDetail';
+    return foundRoute ? foundRoute.value : 'read';
 };
 
 function _createNewsRow(data) {
