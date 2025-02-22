@@ -50,8 +50,8 @@ export const getComparisonText = ({ blankString, inputValues }) => {
     return `Yours: ${yoursText} \n Original: ${originalText}`;
 };
 
-export const getInitText = ({ blanks }) => {
-    const initText = ReactDOMServer.renderToStaticMarkup(renderInitText( {blankString:blanks} )).replace(/<[^>]*>/g, '');
+export const getInitText = ({ blankString }) => {
+    const initText = ReactDOMServer.renderToStaticMarkup(renderInitText( {blankString} )).replace(/<[^>]*>/g, '');
     return <p>{initText}</p>;
 };
 

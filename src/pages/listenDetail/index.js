@@ -32,7 +32,7 @@ function ListenDetailPage() {
     const quiz = getNestedObjectValue(newsDetailData, 'quiz');
 
     const handleSubmit = () => {
-        handleSubmitAndSendEmail(null, getComparisonText({ blanks, inputValues }), 'template_listen_submit');
+        handleSubmitAndSendEmail(null, getComparisonText({ blankString:blanks, inputValues }), 'template_listen_submit');
         setShowComparison(true);
     };
 
@@ -48,7 +48,13 @@ function ListenDetailPage() {
             <div>
                 <img alt="" width={400} src={getNestedObjectValue(newsDetailData, 'image.fields.file.url')} />
             </div>
-            <div>
+            <div style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center',
+                gap: '1rem'
+            }}>
+                <button onClick={() => setShowChoices(true)}>Skip Dictation</button>
                 <AudioPlayer src={audioUrl}></AudioPlayer>
             </div>
             <BlanksContainer>
@@ -70,7 +76,7 @@ function ListenDetailPage() {
                 {showChoices && (
                     quiz ? (
                         <div>
-                            {getInitText({blanks})}
+                            {getInitText({blankString:blanks})}
                             <QuizComponent questions={quiz} />
                         </div>
                     ) : (
