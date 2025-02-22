@@ -7,7 +7,6 @@ import {
     SectionTitle,
     SeeMoreButton,
 } from "./style";
-import validate from "../../../common_check/checkList";
 import getNestedObjectValue from "../../../common_check/getValue";
 
 const routes = [
@@ -41,10 +40,6 @@ function ListSection ({data}) {
     }
     return (
         <Container>
-            <HeaderRow>
-                <SectionTitle>{data.title}</SectionTitle>
-                <SeeMoreButton>More</SeeMoreButton>
-            </HeaderRow>
             <NewsContainer>
                 {data.map((e) => _createNewsRow(e))}
             </NewsContainer>
