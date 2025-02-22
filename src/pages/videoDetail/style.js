@@ -33,8 +33,10 @@ export const StyledImage = styled.img`
 `;
 
 export const BlanksContainer = styled.div`
+    flex: 1;
     padding-left: 100px;
     padding-right: 100px;
+    width: 80%;
     font-size: 20px;
     line-height: 2;
     span {
@@ -50,5 +52,33 @@ export const BlanksContainer = styled.div`
       display: block;
       margin: 30px auto 0;
       padding: 10px;
+    }
+`;
+
+export const ContentRow = styled.div`
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 20px 0;
+`;
+
+export const NavigationButton = styled.button`
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+    align-self: center;
+    min-width: 100px;
+    
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    &:hover:not(:disabled) {
+        background-color: #f0f0f0;
     }
 `;

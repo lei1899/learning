@@ -1,12 +1,11 @@
-import { useParams } from "react-router-dom";
-import { Container, TitleSection, BlanksContainer } from "./style";
+import { useParams, useNavigate } from "react-router-dom";
+import { Container, TitleSection, BlanksContainer, ContentRow, NavigationButton } from "./style";
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import FetchEntry from "../../api/fetchEntry";
 import { useEffect, useState } from 'react';
 import { RichtextContent } from "../../components/common/richtextContent/richtextContent.style";
 import Footer from "../../components/common/footer/footer";
 import getNestedObjectValue from "../../common_check/getValue";
-import AudioPlayer from "../../components/contents/audioPlayerComponent";
 import FillInTheBlankComponent from "../../components/contents/fillInTheBlankComponent";
 import ComparisonComponent, { getComparisonText, getInitText } from "../../components/contents/comparisonComponent";
 import { handleSubmitAndSendEmail } from "../../emailSender/emailSubmitHandler";
@@ -14,6 +13,7 @@ import QuizComponent from "../../components/contents/quizComponent";
 
 function VideoDetailPage() {
     let { id } = useParams();
+    const navigate = useNavigate();
     const [newsDetailData, setNewsDetailData] = useState(null);
     const [showComparison, setShowComparison] = useState(false); // 控制是否显示对比结果
     const [showChoices, setShowChoices] = useState(false); // 控制是否显示选择题
@@ -26,7 +26,9 @@ function VideoDetailPage() {
     if (!newsDetailData) {
         return <></>;
     }
-
+    console.log(newsDetailData);
+    const prevId = getNestedObjectValue(newsDetailData, 'prev');
+    const nextId = getNestedObjectValue(newsDetailData, 'next');
     const videoUrl = getNestedObjectValue(newsDetailData, 'video.fields.file.url');
     const blanks = getNestedObjectValue(newsDetailData, 'blanks');
     const quiz = getNestedObjectValue(newsDetailData, 'quiz');
@@ -40,6 +42,12 @@ function VideoDetailPage() {
         setShowChoices(true);
     };
 
+    const handleNavigation = (targetId) => {
+        if (targetId) {
+            navigate(`/video/${targetId}`);
+        }
+    };
+
     return (
         <Container>
             <TitleSection>
@@ -48,39 +56,53 @@ function VideoDetailPage() {
             <div>
                 <video 
                     src={videoUrl}
-                    controls            // 添加播放控制栏
-                    preload="auto"      // 预加载设置
-                    width="100%"        // 响应式宽度
-                    controlsList="nodownload"  // 禁止下载
+                    controls
+                    preload="auto"
+                    width="100%"
+                    controlsList="nodownload"
                 ></video>
             </div>
-            <BlanksContainer>
-                {!showComparison && !showChoices && (
-                    <FillInTheBlankComponent
-                        blankString={blanks}
-                        handleSubmit={handleSubmit}
-                        inputValues={inputValues}
-                        setInputValues={setInputValues}
-                    />
-                )}
-                {showComparison && !showChoices && (
-                    <ComparisonComponent 
-                        blankString={blanks}
-                        inputValues={inputValues}
-                        handleConfirmComparison={handleConfirmComparison}
-                    />
-                )}
-                {showChoices && (
-                    quiz ? (
-                        <div>
-                            {getInitText({blanks})}
-                            <QuizComponent questions={quiz} />
-                        </div>
-                    ) : (
-                        "Congratulations! You're done!"
-                    )
-                )}
-            </BlanksContainer>
+            <ContentRow>
+                <NavigationButton 
+                    onClick={() => handleNavigation(prevId)}
+                    disabled={!prevId}
+                >
+                    prev
+                </NavigationButton>
+                <BlanksContainer>
+                    {!showComparison && !showChoices && (
+                        <FillInTheBlankComponent
+                            blankString={blanks}
+                            handleSubmit={handleSubmit}
+                            inputValues={inputValues}
+                            setInputValues={setInputValues}
+                        />
+                    )}
+                    {showComparison && !showChoices && (
+                        <ComparisonComponent 
+                            blankString={blanks}
+                            inputValues={inputValues}
+                            handleConfirmComparison={handleConfirmComparison}
+                        />
+                    )}
+                    {showChoices && (
+                        quiz ? (
+                            <div>
+                                {getInitText({blanks})}
+                                <QuizComponent questions={quiz} />
+                            </div>
+                        ) : (
+                            "Congratulations! You're done!"
+                        )
+                    )}
+                </BlanksContainer>
+                <NavigationButton 
+                    onClick={() => handleNavigation(nextId)}
+                    disabled={!nextId}
+                >
+                    next
+                </NavigationButton>
+            </ContentRow>
             <RichtextContent>{documentToReactComponents(newsDetailData.keywords)}</RichtextContent>
             <Footer />
         </Container>
