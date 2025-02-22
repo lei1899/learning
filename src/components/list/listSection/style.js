@@ -48,7 +48,7 @@ export const NewsContainer = styled.ul`
 export const NewsRow = styled.li`
     display:flex;
     flex-direction:row;
-    justify-content:space-between;
+    justify-content:flex-start;
     align-items: center;
     padding: 2rem;
     background-color: white;
@@ -93,7 +93,7 @@ export const NewsRow = styled.li`
 
 export const ReadMoreButton = styled(Link)`
     display:flex;
-    justify-content:center;
+    justify-content:flex-start;
     align-items: center;
     margin:1rem;
     padding:1rem;

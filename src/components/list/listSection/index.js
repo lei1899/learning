@@ -1,11 +1,8 @@
 import {
     Container,
-    HeaderRow,
     NewsContainer,
     NewsRow,
     ReadMoreButton,
-    SectionTitle,
-    SeeMoreButton,
 } from "./style";
 import getNestedObjectValue from "../../../common_check/getValue";
 
@@ -24,12 +21,15 @@ const detailRoute = (route) => {
 function _createNewsRow(data) {
     const type = getNestedObjectValue(data, 'sys.contentType.sys.id');
     return (
-        <NewsRow key={data.sys.id}>
+        <NewsRow 
+            key={data.sys.id} 
+            to={`/${detailRoute(type)}/${data.sys.id}`}
+            as={ReadMoreButton}
+        >
             <div>
                 <h4>{new Date(data.sys.createdAt).toDateString()}</h4>
                 <p>{data.fields.title}</p>
             </div>
-            <ReadMoreButton to={`/${detailRoute(type)}/${data.sys.id}`}>Read more<span/></ReadMoreButton>
         </NewsRow>
     );
 }
