@@ -66,9 +66,7 @@ function VideoDetailPage() {
                 <NavigationButton 
                     onClick={() => handleNavigation(prevId)}
                     disabled={!prevId}
-                >
-                    prev
-                </NavigationButton>
+                >Prev</NavigationButton>
                 <BlanksContainer>
                     {!showComparison && !showChoices && (
                         <FillInTheBlankComponent
@@ -99,9 +97,7 @@ function VideoDetailPage() {
                 <NavigationButton 
                     onClick={() => handleNavigation(nextId)}
                     disabled={!nextId}
-                >
-                    next
-                </NavigationButton>
+                >Next</NavigationButton>
             </ContentRow>
             <RichtextContent>{documentToReactComponents(newsDetailData.keywords)}</RichtextContent>
             <Footer />

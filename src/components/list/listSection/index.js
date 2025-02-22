@@ -36,9 +36,7 @@ function _createNewsRow(data) {
 }
 
 function ListSection ({data}) {
-    const news_list_maximum = 4;
-    const ok = validate(data, news_list_maximum);
-    if (!ok) {
+    if (data.length === 0) {
         return <></>;
     }
     return (
@@ -48,7 +46,7 @@ function ListSection ({data}) {
                 <SeeMoreButton>More</SeeMoreButton>
             </HeaderRow>
             <NewsContainer>
-                {data.list.map((e) => _createNewsRow(e))}
+                {data.map((e) => _createNewsRow(e))}
             </NewsContainer>
         </Container>
     );

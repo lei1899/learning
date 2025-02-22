@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container } from "./style";
-import FetchEntry from "../../api/fetchEntry";
 import ListSection from "../../components/list/listSection";
+import getEntriesByTag from "../../api/getEntriesByTag";
 
 function ListPage() {
     const { id } = useParams();
@@ -10,7 +10,7 @@ function ListPage() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        FetchEntry(id).then(data => setNewData(data));
+        getEntriesByTag(id).then(data => setNewData(data));
     }, [id]);
 
     if (!newData) {
