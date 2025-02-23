@@ -28,27 +28,10 @@ export const TitleSection = styled(QuoteCard)`
   }
 `;
 
-export const StyledImage = styled.img`
-    width: 400px;
-`;
-
-export const BlanksContainer = styled.div`
+export const ContentSection = styled.div`
+    text-align: left;
+    line-height: 30px;
+    font-size: 20px;
     padding-left: 100px;
     padding-right: 100px;
-    font-size: 20px;
-    line-height: 2;
-    span {
-      display: inline;
-    }
-
-    input {
-      display: inline;
-    }
-
-    button {
-      font-size: 20px;
-      display: block;
-      margin: 30px auto 0;
-      padding: 10px;
-    }
 `;

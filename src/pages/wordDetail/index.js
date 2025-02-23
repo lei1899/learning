@@ -1,15 +1,15 @@
 import { useParams } from "react-router-dom";
-import { Container, TitleSection } from "./style";
+import { Container, TitleSection, ContentSection } from "./style";
 import FetchEntry from "../../api/fetchEntry";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Footer from "../../components/common/footer/footer";
 import getNestedObjectValue from "../../common_check/getValue";
-import AudioPlayer from "../../components/contents/audioPlayerComponent";
-import { renderBoldText } from "../../components/contents/comparisonComponent";
+import SentenceItem from "../../components/contents/sentenceItemComponent";
 
 function WordDetailPage() {
     let { id } = useParams();
     const [newsDetailData, setNewsDetailData] = useState(null);
+    const audioRef = useRef(null);
 
     useEffect(() => {
         FetchEntry(id).then(data => setNewsDetailData(data));
@@ -19,22 +19,30 @@ function WordDetailPage() {
         return <></>;
     }
 
-    const audioUrl = getNestedObjectValue(newsDetailData, 'sentenceAudio.fields.file.url');
+    const list = getNestedObjectValue(newsDetailData, 'list');
+    console.log(list);
+    const playAudio = (url) => {
+        if (audioRef.current) {
+            audioRef.current.src = url;
+            audioRef.current.play();
+        }
+    };
 
     return (
         <Container>
+            <audio ref={audioRef} style={{ display: 'none' }} />
             <TitleSection>
                 <h4>{newsDetailData.title}</h4>
             </TitleSection>
-            <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center',
-                gap: '1rem'
-            }}>
-                <p>{ renderBoldText({ blankString:newsDetailData.sentence }) }</p>
-                <AudioPlayer src={audioUrl}></AudioPlayer>
-            </div>
+            <ContentSection>
+                {list && list.map((item, index) => (
+                    <SentenceItem
+                        key={index}
+                        item={item}
+                        onPlay={playAudio}
+                        />
+                ))}
+            </ContentSection>
             <Footer />
         </Container>
     );
