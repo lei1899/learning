@@ -20,7 +20,7 @@ function WordDetailPage() {
     }
 
     const list = getNestedObjectValue(newsDetailData, 'list');
-    console.log(list);
+
     const playAudio = (url) => {
         if (audioRef.current) {
             audioRef.current.src = url;

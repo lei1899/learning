@@ -26,7 +26,7 @@ function VideoDetailPage() {
     if (!newsDetailData) {
         return <></>;
     }
-    console.log(newsDetailData);
+
     const prevId = getNestedObjectValue(newsDetailData, 'prev');
     const nextId = getNestedObjectValue(newsDetailData, 'next');
     const videoUrl = getNestedObjectValue(newsDetailData, 'video.fields.file.url');
