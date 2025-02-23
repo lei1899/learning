@@ -1,4 +1,7 @@
-import React from 'react';import { Highlight, AnswerHighlight } from './style';import ReactDOMServer from 'react-dom/server';
+import React from 'react';
+import { Highlight, AnswerHighlight, BoldText } from './style';
+import ReactDOMServer from 'react-dom/server';
+
 const renderUserText = ({ blankString, inputValues }) => {
     let currentIndex = 0;
     if (!blankString) {
@@ -15,9 +18,10 @@ const renderUserText = ({ blankString, inputValues }) => {
                 return <span key={index}>{part}</span>;
             })}
         </>
-    );};
+    );
+};
+
 const renderInitText = ({ blankString }) => {
-    console.log("====string=", blankString);
     if (typeof blankString !== 'string') {
         return <></>;
     }
@@ -30,7 +34,25 @@ const renderInitText = ({ blankString }) => {
                 return <span key={index}>{part}</span>; 
             })}
         </>
-    );};
+    );
+};
+
+export const renderBoldText = ({ blankString }) => {
+    if (typeof blankString !== 'string') {
+        return <></>;
+    }
+    return (
+        <>
+            {blankString.split(/(__.*?__)/).map((part, index) => {
+                if (part.match(/__.*?__/)) {
+                    return <BoldText>{part.replace(/__/g, '')}</BoldText>;
+                }
+                return <span key={index}>{part}</span>; 
+            })}
+        </>
+    );
+};
+
 const ComparisonComponent = ({ blankString, inputValues, handleConfirmComparison }) => {
     return (
         <div>

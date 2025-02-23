@@ -13,6 +13,7 @@ function NavBar() {
                     <DesktopMenuItem to="/list/kidsDairy">Dairy</DesktopMenuItem>
                     <DesktopMenuItem to="/list/scienceSnow">Snow</DesktopMenuItem>
                     <DesktopMenuItem to="/list/leiDictation">LeiDictation</DesktopMenuItem>
+                    <DesktopMenuItem to="/list/wordWeekly">WordWeekly</DesktopMenuItem>
                 </DesktopMenu>
             </DesktopNavBar>
         </Container>

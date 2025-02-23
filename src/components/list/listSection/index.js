@@ -11,6 +11,7 @@ const routes = [
     { key: 'readQuestionsWrite', value: 'read' },
     { key: 'listenReadQuiz', value: 'write' },
     { key: 'videoFillQuiz', value: 'video' },
+    { key: 'wordLearn', value: 'word' },
 ];
 
 const detailRoute = (route) => {

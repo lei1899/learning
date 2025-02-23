@@ -11,6 +11,7 @@ import ListenDetailPage from "./pages/listenDetail";
 import ReadDetailPage from "./pages/readDetail";
 import WriteDetailPage from "./pages/writeDetail";
 import VideoDetailPage from "./pages/videoDetail";
+import WordDetailPage from "./pages/wordDetail";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "video/:id",
         element: <VideoDetailPage/>
+      },
+      {
+        path: "word/:id",
+        element: <WordDetailPage/>
       }
     ]
   }
