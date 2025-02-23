@@ -8,7 +8,7 @@ import Footer from "../../components/common/footer/footer";
 import getNestedObjectValue from "../../common_check/getValue";
 import AudioPlayer from "../../components/contents/audioPlayerComponent";
 import FillInTheBlankComponent from "../../components/contents/fillInTheBlankComponent";
-import ComparisonComponent, { getComparisonText, getInitText } from "../../components/contents/comparisonComponent";
+import ComparisonComponent, { getComparisonText, getBoldText } from "../../components/contents/comparisonComponent";
 import { handleSubmitAndSendEmail } from "../../emailSender/emailSubmitHandler";
 import QuizComponent from "../../components/contents/quizComponent";
 
@@ -76,7 +76,7 @@ function ListenDetailPage() {
                 {showChoices && (
                     quiz ? (
                         <div>
-                            {getInitText({blankString:blanks})}
+                            {getBoldText({blankString:blanks})}
                             <QuizComponent questions={quiz} />
                         </div>
                     ) : (
