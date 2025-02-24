@@ -13,6 +13,7 @@ const routes = [
     { key: 'videoFillQuiz', value: 'video' },
     { key: 'wordLearn', value: 'word' },
     { key: 'grammarAnswerInParts', value: 'grammarFill' },
+    { key: 'listenSummary', value: 'summary' },
 ];
 
 const detailRoute = (route) => {
