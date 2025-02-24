@@ -26,7 +26,7 @@ function ListenDetailPage() {
     if (!newsDetailData) {
         return <></>;
     }
-    console.log(newsDetailData);
+
     const audioUrl = getNestedObjectValue(newsDetailData, 'sentence.fields.audio.fields.file.url');
     const blanks = getNestedObjectValue(newsDetailData, 'blankPart');
     const quiz = getNestedObjectValue(newsDetailData, 'quiz');

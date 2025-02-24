@@ -78,9 +78,11 @@ export const getInitText = ({ blankString }) => {
 };
 
 export const getBoldText = ({ blankString }) => {
-    const boldText = ReactDOMServer.renderToStaticMarkup(renderBoldText( {blankString} )).replace(/<[^>]*>/g, '');
-    const boldTextFix = boldText.replace(/&#x27;/g, "'");
-    return <p>{boldTextFix}</p>;
+    const boldText = ReactDOMServer.renderToStaticMarkup(renderBoldText({ blankString }))
+        .replace(/<[^>]*>/g, '')
+        .replace(/&#x27;/g, "'")
+        .replace(/&quot;/g, '"');
+    return <p>{boldText}</p>;
 };
 
 export default ComparisonComponent;
