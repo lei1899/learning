@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { QuizLi, CorrectLabel, CorrectAnswer, QuestionProcess } from './style';
 
-const QuizComponent = ({questions}) => {
+const QuizComponent = ({questions, onQuizComplete}) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState(null);
     const [showAnswer, setShowAnswer] = useState(false);
@@ -40,6 +40,9 @@ const QuizComponent = ({questions}) => {
             )}
             {currentQuestionIndex < questions.length - 1 && (
                 <button onClick={handleNextClick}>Next</button>
+            )}
+            {currentQuestionIndex === questions.length - 1 && (
+                <button onClick={onQuizComplete}>Complete</button>
             )}
         </div>
     );

@@ -15,8 +15,9 @@ import QuizComponent from "../../components/contents/quizComponent";
 function ListenDetailPage() {
     let { id } = useParams();
     const [newsDetailData, setNewsDetailData] = useState(null);
-    const [showComparison, setShowComparison] = useState(false); // 控制是否显示对比结果
-    const [showChoices, setShowChoices] = useState(false); // 控制是否显示选择题
+    const [showComparison, setShowComparison] = useState(false);
+    const [showChoices, setShowChoices] = useState(false); 
+    const [quizCompleted, setQuizCompleted] = useState(false);
     const [inputValues, setInputValues] = useState([]);
 
     useEffect(() => {
@@ -74,14 +75,23 @@ function ListenDetailPage() {
                     />
                 )}
                 {showChoices && (
-                    quiz ? (
-                        <div>
-                            {getBoldText({blankString:blanks})}
-                            <QuizComponent questions={quiz} />
-                        </div>
-                    ) : (
-                        "Congratulations! You're done!"
-                    )
+                    <>
+                        {quiz && !quizCompleted && (
+                            <div>
+                                {getBoldText({blankString:blanks})}
+                                <QuizComponent 
+                                    questions={quiz} 
+                                    onQuizComplete={() => setQuizCompleted(true)}
+                                />
+                            </div>
+                        )}
+                        {(!quiz || quizCompleted) && (
+                            <div>
+                                <h2>Congratulations!</h2>
+                                <p>You're done!</p>
+                            </div>
+                        )}
+                    </>
                 )}
             </BlanksContainer>
             <RichtextContent>{documentToReactComponents(newsDetailData.keywords)}</RichtextContent>
