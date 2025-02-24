@@ -10,10 +10,11 @@ function NavBar() {
                     <Logo src={logo} />
                 </Link>
                 <DesktopMenu>
+                    <DesktopMenuItem to="/list/listGrammar">Grammar</DesktopMenuItem>
                     <DesktopMenuItem to="/list/kidsDairy">Dairy</DesktopMenuItem>
                     <DesktopMenuItem to="/list/kidsTed">TED</DesktopMenuItem>
                     <DesktopMenuItem to="/list/scienceSnow">Snow</DesktopMenuItem>
-                    <DesktopMenuItem to="/list/leiDictation">LeiDictation</DesktopMenuItem>
+                    <DesktopMenuItem to="/list/leiDictation">Dictation</DesktopMenuItem>
                     <DesktopMenuItem to="/list/wordWeekly">WordWeekly</DesktopMenuItem>
                 </DesktopMenu>
             </DesktopNavBar>
