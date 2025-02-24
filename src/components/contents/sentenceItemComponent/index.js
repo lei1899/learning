@@ -1,13 +1,14 @@
 import { renderBoldText } from "../comparisonComponent";
 import getNestedObjectValue from "../../../common_check/getValue";
+import { SentenceStyle } from "./style";
 
 const SentenceItem = ({ item, onPlay }) => {
     const audioUrl = getNestedObjectValue(item, 'fields.audio.fields.file.url');
     const sentence = getNestedObjectValue(item, 'fields.sentence');
     return (
-        <div onClick={() => onPlay(audioUrl)} style={{ cursor: 'pointer' }}>
-            <p>{ renderBoldText({ blankString:sentence }) }</p>
-        </div>
+        <SentenceStyle onClick={() => onPlay(audioUrl)}>
+            { renderBoldText({ blankString:sentence }) }
+        </SentenceStyle>
     );
 };
 
