@@ -7,7 +7,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: ''
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +27,7 @@ const LoginPage = () => {
     setIsLoading(true);
     
     try {
-      await login(formData.email, formData.password);
+      await login(formData.username, formData.password);
       navigate('/');
     } catch (err) {
       setError(err.message);
@@ -42,11 +42,11 @@ const LoginPage = () => {
         <h2>Login</h2>
         {error && <div style={{color: 'red'}}>{error}</div>}
         <Input 
-          type="email" 
-          name="email"
-          value={formData.email}
+          type="text" 
+          name="username"
+          value={formData.username}
           onChange={handleChange}
-          placeholder="Email" 
+          placeholder="" 
           required 
         />
         <Input 
@@ -54,7 +54,7 @@ const LoginPage = () => {
           name="password"
           value={formData.password}
           onChange={handleChange}
-          placeholder="Password" 
+          placeholder="" 
           required 
         />
         <Button type="submit" disabled={isLoading}>
