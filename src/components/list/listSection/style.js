@@ -112,6 +112,5 @@ export const ReadMoreButton = styled(Link)`
         width:20px;
         height:16px;
         margin-left:1rem;
-        background-image: url("https://www.elementfleet.com/webfiles/1723594689501/icons/arrow-r.png");
     }
 `

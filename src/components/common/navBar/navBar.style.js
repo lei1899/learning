@@ -19,10 +19,6 @@ export const DesktopNavBar = styled.div`
     align-items: center;
     height:100px;
     width: 100%;
-
-    @media screen and (max-width:769px) {
-        display:none;
-    }
 `
 
 export const Logo = styled.img`
