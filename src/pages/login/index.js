@@ -27,7 +27,8 @@ const LoginPage = () => {
     setIsLoading(true);
     
     try {
-      await login(formData.username, formData.password);
+      const res = await login(formData.username, formData.password);
+      console.log(res);
       navigate('/');
     } catch (err) {
       setError(err.message);

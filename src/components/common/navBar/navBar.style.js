@@ -146,3 +146,25 @@ export const MobileMenuItem = styled(Link)`
         /* display:inline-block; */
     }
 `
+
+export const UserName = styled.div`
+    margin-left: auto;
+    padding: 10px;
+    color: #333;
+    font-size: 14px;
+`;
+
+export const LogoutButton = styled.button`
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+    
+    &:hover {
+        background-color: #e0e0e0;
+    }
+`;
