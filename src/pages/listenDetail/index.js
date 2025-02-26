@@ -50,12 +50,18 @@ function ListenDetailPage() {
                 <img alt="" width={400} src={getNestedObjectValue(newsDetailData, 'image.fields.file.url')} />
             </div>
             <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
+                display: 'flex',
+                flexDirection: 'column',
                 alignItems: 'center',
                 gap: '1rem'
             }}>
-                <button onClick={() => setShowChoices(true)}>Skip Dictation</button>
+                <div style={{
+                    display: 'flex',
+                    gap: '1rem'
+                }}>
+                    <button onClick={() => setShowChoices(true)}>Skip Dictation</button>
+                    <button onClick={() => setShowChoices(false)}>Back to Dictation</button>
+                </div>
                 <AudioPlayer src={audioUrl}></AudioPlayer>
             </div>
             <BlanksContainer>
@@ -87,6 +93,7 @@ function ListenDetailPage() {
                         )}
                         {(!quiz || quizCompleted) && (
                             <div>
+                                {getBoldText({blankString:blanks})}
                                 <h2>Congratulations!</h2>
                                 <p>You're done!</p>
                             </div>
