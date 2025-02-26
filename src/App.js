@@ -13,6 +13,8 @@ import WriteDetailPage from "./pages/writeDetail";
 import VideoDetailPage from "./pages/videoDetail";
 import WordDetailPage from "./pages/wordDetail";
 import SummaryDetailPage from "./pages/summaryDetail";
+import LoginPage from "./pages/login";
+import { AuthProvider } from './hooks/useAuth';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,10 @@ const router = createBrowserRouter([
       <Outlet />
     </>,
     children: [
+      {
+        path: "login",
+        element: <LoginPage/>
+      },
       {
         path: "",
         element: <HomePage/>
@@ -61,7 +67,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   )
 }
 
